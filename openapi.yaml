@@ -1,0 +1,67 @@
+openapi: 3.1.0
+info:
+  title: CPCUP Hiring API (stub)
+  version: 0.1.0
+paths:
+  /api/projects:
+    get:
+      summary: List projects
+      responses:
+        '200':
+          description: OK
+  /api/search:
+    post:
+      summary: Semantic search
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query:
+                  type: string
+                templateId:
+                  type: string
+      responses:
+        '200':
+          description: Search results
+  /api/candidates/{id}:
+    get:
+      summary: Candidate profile
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Candidate
+  /api/team/evaluate:
+    post:
+      summary: Evaluate team
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                candidateIds:
+                  type: array
+                  items:
+                    type: string
+      responses:
+        '200':
+          description: Evaluation
+  /api/integrations/upload:
+    post:
+      summary: Upload integration/CSV
+      responses:
+        '200':
+          description: Uploaded
+  /api/analytics/summary:
+    get:
+      summary: Dashboard KPIs
+      responses:
+        '200':
+          description: KPIs
