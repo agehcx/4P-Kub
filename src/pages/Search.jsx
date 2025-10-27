@@ -178,7 +178,7 @@ export default function Search() {
                   </div>
                 </div>
                 <a 
-                  href="/team-builder" 
+                  href="/team" 
                   className="px-6 py-2 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition-colors flex items-center gap-2"
                 >
                   Proceed to Team Builder
