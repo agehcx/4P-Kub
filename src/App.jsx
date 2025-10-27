@@ -10,20 +10,40 @@ import Admin from './pages/Admin'
 export default function App() {
   return (
     <div className="min-h-screen bg-gray-50 text-gray-900">
-      <header className="bg-white shadow">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <h1 className="text-xl font-semibold">CPCUP — KG Hiring</h1>
-          <nav className="space-x-4">
-            <Link to="/">Projects</Link>
-            <Link to="/search">Search</Link>
-            <Link to="/team">Team Builder</Link>
-            <Link to="/analytics">Analytics</Link>
-            <Link to="/admin">Admin</Link>
+      <header className="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
+        <div className="container mx-auto px-6 py-4 flex items-center justify-between">
+          <Link to="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
+            <div className="w-10 h-10 bg-gradient-to-br from-indigo-600 to-indigo-700 rounded-lg flex items-center justify-center shadow-sm">
+              <span className="text-white font-bold text-lg">K</span>
+            </div>
+            <div>
+              <h1 className="text-xl font-bold text-gray-900">
+                CP Konha
+              </h1>
+              <p className="text-xs text-gray-500">Smart Hiring Platform</p>
+            </div>
+          </Link>
+          <nav className="flex items-center gap-1">
+            <Link to="/" className="px-4 py-2 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-indigo-600 transition-all">
+              Projects
+            </Link>
+            <Link to="/search" className="px-4 py-2 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-indigo-600 transition-all">
+              Search
+            </Link>
+            <Link to="/team" className="px-4 py-2 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-indigo-600 transition-all">
+              Team Builder
+            </Link>
+            <Link to="/analytics" className="px-4 py-2 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-indigo-600 transition-all">
+              Analytics
+            </Link>
+            <Link to="/admin" className="px-4 py-2 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-indigo-600 transition-all">
+              Admin
+            </Link>
           </nav>
         </div>
       </header>
 
-      <main className="container mx-auto px-4 py-6">
+      <main className="container mx-auto px-6 py-8">
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/search" element={<Search />} />
