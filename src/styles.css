@@ -22,12 +22,12 @@ html, body, #root {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #6366f1;
+  background: #0E706F;
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #4f46e5;
+  background: #0c6969;
 }
 
 /* Smooth transitions */

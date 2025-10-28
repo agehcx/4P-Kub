@@ -21,7 +21,7 @@ export default function TeamBuilder() {
     <div className="max-w-7xl mx-auto">
       <div className="mb-8">
         <div className="flex items-center gap-3 mb-4">
-          <div className="w-10 h-10 bg-purple-600 text-white rounded-full flex items-center justify-center font-bold">3</div>
+          <div className="w-10 h-10 bg-[#0E706F] text-white rounded-full flex items-center justify-center font-bold">3</div>
           <div>
             <h2 className="text-3xl font-bold text-gray-900">Propose 3 Team Options</h2>
             <p className="text-gray-600">Compare teams with different strategic trade-offs</p>
@@ -164,7 +164,7 @@ export default function TeamBuilder() {
       {/* Interactive Builder */}
       <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm mb-8">
         <div className="flex items-center gap-3 mb-6">
-          <div className="w-10 h-10 bg-amber-600 text-white rounded-full flex items-center justify-center font-bold">4</div>
+          <div className="w-10 h-10 bg-[#0E706F] text-white rounded-full flex items-center justify-center font-bold">4</div>
           <div>
             <h3 className="text-xl font-bold text-gray-900">Adjust & Fine-Tune</h3>
             <p className="text-sm text-gray-600">Customize weights and constraints for your needs</p>
@@ -174,37 +174,37 @@ export default function TeamBuilder() {
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
           <div>
             <label className="block text-xs font-semibold text-gray-700 mb-2">Technical Fit Weight</label>
-            <input type="range" min="0" max="50" defaultValue="35" className="w-full" />
+            <input type="range" min="0" max="50" defaultValue="35" className="w-full accent-[#1C5581]" />
             <div className="text-xs text-gray-500 mt-1">35%</div>
           </div>
           <div>
             <label className="block text-xs font-semibold text-gray-700 mb-2">Experience Weight</label>
-            <input type="range" min="0" max="50" defaultValue="20" className="w-full" />
+            <input type="range" min="0" max="50" defaultValue="20" className="w-full accent-[#1C5581]" />
             <div className="text-xs text-gray-500 mt-1">20%</div>
           </div>
           <div>
             <label className="block text-xs font-semibold text-gray-700 mb-2">Collaboration Weight</label>
-            <input type="range" min="0" max="50" defaultValue="15" className="w-full" />
+            <input type="range" min="0" max="50" defaultValue="15" className="w-full accent-[#1C5581]" />
             <div className="text-xs text-gray-500 mt-1">15%</div>
           </div>
           <div>
             <label className="block text-xs font-semibold text-gray-700 mb-2">Diversity Weight</label>
-            <input type="range" min="0" max="50" defaultValue="10" className="w-full" />
+            <input type="range" min="0" max="50" defaultValue="10" className="w-full accent-[#1C5581]" />
             <div className="text-xs text-gray-500 mt-1">10%</div>
           </div>
           <div>
             <label className="block text-xs font-semibold text-gray-700 mb-2">Motivation Weight</label>
-            <input type="range" min="0" max="50" defaultValue="10" className="w-full" />
+            <input type="range" min="0" max="50" defaultValue="10" className="w-full accent-[#1C5581]" />
             <div className="text-xs text-gray-500 mt-1">10%</div>
           </div>
           <div>
             <label className="block text-xs font-semibold text-gray-700 mb-2">Practicality Weight</label>
-            <input type="range" min="0" max="50" defaultValue="10" className="w-full" />
+            <input type="range" min="0" max="50" defaultValue="10" className="w-full accent-[#1C5581]" />
             <div className="text-xs text-gray-500 mt-1">10%</div>
           </div>
         </div>
 
-        <button className="w-full px-6 py-3 bg-amber-600 text-white rounded-lg font-semibold hover:bg-amber-700 transition-colors flex items-center justify-center gap-2">
+        <button className="w-full px-6 py-3 bg-[#0E706F] text-white rounded-lg font-semibold hover:bg-[#084343] transition-colors flex items-center justify-center gap-2">
           <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
           </svg>
@@ -219,14 +219,14 @@ export default function TeamBuilder() {
           
           <div className="flex gap-2 mb-4">
             <input
-              className="flex-1 px-4 py-2.5 bg-white border border-gray-300 rounded-lg outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition-all text-gray-900 placeholder:text-gray-400"
+              className="flex-1 px-4 py-2.5 bg-white border border-gray-300 rounded-lg outline-none focus:border-[#1C5581] focus:ring-2 focus:ring-indigo-500/20 transition-all text-gray-900 placeholder:text-gray-400"
               value={query}
               onChange={(event) => setQuery(event.target.value)}
               placeholder="Search candidates"
               onKeyPress={(e) => e.key === 'Enter' && search()}
             />
             <button 
-              className="px-5 py-2.5 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 transition-colors shadow-sm"
+              className="px-5 py-2.5 bg-[#1C5581] text-white rounded-lg font-semibold hover:bg-[#143A58] transition-colors shadow-sm"
               onClick={search}
             >
               Search
@@ -258,7 +258,7 @@ export default function TeamBuilder() {
                   </div>
                 </div>
                 <button
-                  className="px-3 py-1.5 bg-indigo-50 text-indigo-700 text-sm font-medium rounded-lg hover:bg-indigo-100 border border-indigo-200 transition-all"
+                  className="px-3 py-1.5 bg-[#E8F0F0] text-[#1C5581] text-sm font-medium rounded-lg hover:bg-[#B7E6E5] border border-[#0E706F]/20 transition-all"
                   onClick={() => setTeam((current) => Array.from(new Set([...current, candidate.id])))}
                 >
                   + Add

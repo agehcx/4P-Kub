@@ -14,7 +14,7 @@ export default function Landing() {
         </p>
         <Link 
           to="/search" 
-          className="inline-block px-8 py-4 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 transition-colors shadow-md text-lg"
+          className="inline-block px-8 py-4 bg-[#0E706F] text-white rounded-lg font-semibold hover:bg-[#084343] transition-colors shadow-md text-lg"
         >
           Start Team Formation →
         </Link>
@@ -58,7 +58,8 @@ export default function Landing() {
       </div>
 
       {/* HR User Flow - 10 Steps */}
-      <div className="bg-gray-50 p-8 rounded-xl border border-gray-200 mb-12">
+      {/* <div className="bg-gray-50 p-8 rounded-xl border-dashed border-gray-200 mb-12 shadow-sm"> */}
+      <div className="bg-gray-100 p-8 rounded-xl border-2 border-dashed border-gray-300 mb-12 shadow-sm">
         <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">HR Workflow (5-Step Process)</h2>
         <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
           <div className="bg-white p-4 rounded-lg border-2 border-indigo-200 relative">
@@ -123,7 +124,7 @@ export default function Landing() {
       <div className="mb-8">
         <h2 className="text-2xl font-bold text-gray-900 mb-6">Active Projects</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="group p-6 bg-white rounded-xl border border-gray-200 hover:border-indigo-300 hover:shadow-md transition-all">
+          <div className="group p-6 bg-white rounded-xl border border-gray-200 hover:border-[#24B4B2] hover:shadow-md transition-all">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-3">
                 <div className="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center">
@@ -149,7 +150,7 @@ export default function Landing() {
             </Link>
           </div>
 
-          <div className="group p-6 bg-white rounded-xl border border-gray-200 hover:border-indigo-300 hover:shadow-md transition-all">
+          <div className="group p-6 bg-white rounded-xl border border-gray-200 hover:border-[#24B4B2] hover:shadow-md transition-all">
             <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-3">
                 <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
@@ -175,10 +176,10 @@ export default function Landing() {
             </Link>
           </div>
 
-          <div className="group p-6 bg-white rounded-xl border-2 border-dashed border-gray-300 hover:border-indigo-400 hover:bg-indigo-50 transition-all cursor-pointer">
+          <div className="group p-6 bg-white rounded-xl border-2 border-dashed border-gray-300 hover:border-[#0E706F] hover:bg-[#9CEAE9]/15 transition-all cursor-pointer">
             <Link to="/search" className="flex flex-col items-center justify-center h-full text-center">
               <div className="w-16 h-16 bg-gray-100 rounded-lg flex items-center justify-center mb-3">
-                <svg className="w-8 h-8 text-gray-400 group-hover:text-indigo-600 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="w-8 h-8 text-gray-400 group-hover:text-[#0E706F] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                 </svg>
               </div>

@@ -6,7 +6,7 @@ export default function ResultCard({ candidate }) {
   const scoreColor = score >= 80 ? 'bg-green-600' : score >= 60 ? 'bg-indigo-600' : 'bg-gray-500'
   
   return (
-    <div className="p-6 bg-white rounded-xl border border-gray-200 hover:border-indigo-300 hover:shadow-md transition-all">
+    <div className="p-6 bg-white rounded-xl border border-gray-200 hover:border-[#24B4B2] hover:shadow-md transition-all">
       <div className="flex items-start gap-5">
         <img 
           src={candidate.photo || 'https://via.placeholder.com/64'} 
@@ -19,7 +19,7 @@ export default function ResultCard({ candidate }) {
             <div className="flex-1 min-w-0">
               <Link 
                 to={`/candidates/${candidate.id}`} 
-                className="text-xl font-semibold text-gray-900 hover:text-indigo-600 transition-colors block truncate"
+                className="text-xl font-semibold text-gray-900 hover:text-[#0E706F] transition-colors block truncate"
               >
                 {candidate.name}
               </Link>
@@ -38,7 +38,7 @@ export default function ResultCard({ candidate }) {
             {(candidate.topSkills || []).slice(0, 5).map((skill) => (
               <span 
                 key={skill} 
-                className="px-3 py-1.5 bg-indigo-50 text-indigo-700 rounded-md text-sm font-medium"
+                className="px-3 py-1.5 bg-[#E8F0F0] text-[#0E706F] rounded-md text-sm font-medium"
               >
                 {skill}
               </span>

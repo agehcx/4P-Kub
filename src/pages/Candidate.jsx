@@ -17,7 +17,7 @@ export default function Candidate() {
     return (
       <div className="flex items-center justify-center py-20">
         <div className="flex flex-col items-center gap-3">
-          <div className="w-12 h-12 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin"></div>
+          <div className="w-12 h-12 border-4 border-[#0E706F] border-t-transparent rounded-full animate-spin"></div>
           <p className="text-sm text-gray-600">Loading profile & graph analysis...</p>
         </div>
       </div>
@@ -25,7 +25,7 @@ export default function Candidate() {
   }
 
   const score = (candidate.score * 100).toFixed(0)
-  const scoreColor = score >= 80 ? 'bg-green-600' : score >= 60 ? 'bg-indigo-600' : 'bg-gray-500'
+  const scoreColor = score >= 80 ? 'bg-green-600' : score >= 60 ? 'bg-[#0E706F]' : 'bg-gray-500'
 
   return (
     <div className="max-w-7xl mx-auto">
@@ -70,7 +70,7 @@ export default function Candidate() {
                 {candidate.topSkills.map((skill) => (
                   <span 
                     key={skill} 
-                    className="px-3 py-1.5 bg-indigo-50 text-indigo-700 rounded-md text-sm font-medium"
+                    className="px-3 py-1.5 bg-[#E8F0F0] text-[#084343] rounded-md text-sm font-medium"
                   >
                     {skill}
                   </span>
@@ -79,7 +79,7 @@ export default function Candidate() {
             </div>
 
             <div className="mt-6 pt-6 border-t border-gray-200 space-y-2">
-              <button className="w-full px-6 py-3 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 transition-colors shadow-sm">
+              <button className="w-full px-6 py-3 bg-[#0E706F] text-white rounded-lg font-semibold hover:bg-[#084343] transition-colors shadow-sm">
                 Add to Team Canvas
               </button>
               <button className="w-full px-6 py-3 bg-white border border-gray-300 text-gray-700 rounded-lg font-semibold hover:bg-gray-50 transition-colors">

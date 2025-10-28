@@ -5,7 +5,7 @@ export default function Analytics() {
     <div className="max-w-7xl mx-auto">
       <div className="mb-8">
         <div className="flex items-center gap-3 mb-4">
-          <div className="w-10 h-10 bg-green-600 text-white rounded-full flex items-center justify-center font-bold">5</div>
+          <div className="w-10 h-10 bg-[#0E706F] text-white rounded-full flex items-center justify-center font-bold">5</div>
           <div>
             <h2 className="text-3xl font-bold text-gray-900">Track & Learn</h2>
             <p className="text-gray-600">Monitor team performance and feed insights back into the system</p>
