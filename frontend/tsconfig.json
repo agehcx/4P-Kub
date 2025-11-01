@@ -15,5 +15,5 @@
     "strict": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["src"]
+  "include": ["frontend/src"]
 }
