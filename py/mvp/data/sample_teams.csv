@@ -1,0 +1,4 @@
+team_id,team_name,team_skills,O,C,E,A,N
+T01,Feed Analytics,"sql|data analysis|communication",0.62,0.76,0.55,0.66,0.38
+T02,Cold Chain Ops,"supply chain|inventory|dashboard",0.58,0.8,0.6,0.6,0.42
+T03,Agri R&D,"agritech|python|ml",0.7,0.7,0.5,0.7,0.3

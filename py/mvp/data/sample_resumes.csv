@@ -1,0 +1,6 @@
+C001,Anya,3,"Built demand forecasting dashboards for livestock feed. Strong SQL, Python (pandas), and machine learning (regression, clustering). Experience in agritech supply chain analytics.","python; sql; machine learning; supply chain; agritech",0.7,0.8,0.5,0.7,0.3
+C002,Beam,5,"Led reporting and insights for cold-chain logistics. Expert in inventory analytics, dashboarding, stakeholder presentations. Some JavaScript/React for internal tools.","data analysis; supply chain; communication; javascript",0.6,0.75,0.65,0.6,0.4
+C003,Chan,2,"Junior data analyst with SQL and Python exposure. Built small ML classifiers for quality inspection. Interested in aquaculture data.","sql; python; machine learning; agritech",0.65,0.6,0.55,0.7,0.35
+C004,Dara,7,"Senior Java/Spring engineer, integrating warehouse systems with cloud (AWS). Worked on real-time logistics events and reporting pipelines.","java; cloud; data analysis; supply chain",0.55,0.85,0.6,0.55,0.45
+C005,Elle,4,"ML engineer focused on time-series forecasting and demand planning using Python and scikit-learn. Presented results to business stakeholders.","machine learning; python; communication; forecasting",0.72,0.78,0.58,0.65,0.32
+id,name,years_experience,resume_text,skills,O,C,E,A,N
