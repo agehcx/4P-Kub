@@ -2,6 +2,26 @@ import React, { useEffect, useMemo, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 
 const STORAGE_KEY = 'teamSummaries'
+function normalizeProjectName(value) {
+  if (!value && value !== '') return ''
+  if (typeof value === 'string') return value
+  if (typeof value === 'object' && value !== null) {
+    // common case: saved `query` object like { projectName: 'X' }
+    if (typeof value.projectName === 'string') return value.projectName
+    // fallback to extracting a nested property named projectName (if any)
+    for (const key of Object.keys(value)) {
+      if (key.toLowerCase().includes('project') && typeof value[key] === 'string') {
+        return value[key]
+      }
+    }
+    return ''
+  }
+  try {
+    return String(value)
+  } catch {
+    return ''
+  }
+}
 
 function readStoredSummaries() {
   if (typeof window === 'undefined') {
@@ -10,7 +30,23 @@ function readStoredSummaries() {
 
   try {
     const raw = window.localStorage.getItem(STORAGE_KEY)
-    return raw ? JSON.parse(raw) : []
+    const parsed = raw ? JSON.parse(raw) : []
+
+    // Normalize projectName to a string for all saved entries and persist the cleaned data.
+    const normalized = Array.isArray(parsed)
+      ? parsed.map((entry) => ({
+          ...entry,
+          projectName: normalizeProjectName(entry && entry.projectName),
+        }))
+      : []
+
+    try {
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(normalized))
+    } catch (err) {
+      // ignore write-back failures
+    }
+
+    return normalized
   } catch (error) {
     console.warn('Failed to read stored team summaries', error)
     return []
@@ -42,14 +78,19 @@ export default function TeamSummary() {
       return
     }
 
+    const normalizedIncoming = {
+      ...incomingSummary,
+      projectName: normalizeProjectName(incomingSummary && incomingSummary.projectName),
+    }
+
     setSummaries((previous) => {
-      const exists = previous.some((entry) => entry.id === incomingSummary.id)
+      const exists = previous.some((entry) => entry.id === normalizedIncoming.id)
       if (exists) {
         return previous
       }
-      return [incomingSummary, ...previous]
+      return [normalizedIncoming, ...previous]
     })
-    setSelectedId(incomingSummary.id)
+    setSelectedId(normalizedIncoming.id)
   }, [incomingSummary])
 
   useEffect(() => {
@@ -104,9 +145,15 @@ export default function TeamSummary() {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-3xl font-bold text-gray-900">Team Summary</h2>
+          {activeSummary?.projectName && (
+            <p className="text-2xl font-semibold text-gray-700 mt-1">
+              {activeSummary.projectName}
+            </p>
+          )}
           <p className="text-sm text-gray-500">
             Generated {createdAtValid ? createdAt.toLocaleString() : 'recently'}
           </p>
+          
         </div>
         <div className="flex gap-2">
           <button
@@ -231,7 +278,7 @@ export default function TeamSummary() {
                     }`}
                     onClick={() => setSelectedId(entry.id)}
                   >
-                    <div className="font-medium">Team of {memberCount}</div>
+                    <div className="font-medium">{entry.projectName || `Team of ${memberCount}`}</div>
                     <div className="text-xs text-gray-500">{label}</div>
                   </button>
                 )

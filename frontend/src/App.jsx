@@ -37,6 +37,9 @@ export default function App() {
             <Link to="/team" className="px-4 py-2 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-[#0E706F] transition-all">
               Team Builder
             </Link>
+            <Link to="/team/summary" className="px-4 py-2 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-[#0E706F] transition-all">
+              Team Summary
+            </Link>
             <Link to="/analytics" className="px-4 py-2 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-[#0E706F] transition-all">
               Analytics
             </Link>

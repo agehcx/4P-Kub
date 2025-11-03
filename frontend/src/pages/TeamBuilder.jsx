@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useWorkflow } from '../contexts/WorkflowContext'
 import { mockEvaluateTeam, mockSearch } from '../services/mockApi'
 
 export default function TeamBuilder() {
@@ -9,10 +10,17 @@ export default function TeamBuilder() {
   const [evaluation, setEvaluation] = useState(null)
   const [latestSummary, setLatestSummary] = useState(null)
   const navigate = useNavigate()
+  const { searchParams } = useWorkflow()
+  const [loading, setLoading] = useState(false)
 
   async function search() {
-    const response = await mockSearch({ query })
-    setPool(response.candidates)
+    setLoading(true) 
+    try {
+      const response = await mockSearch({ query })
+      setPool(response.candidates)
+    } finally {
+      setLoading(false) 
+    }
   }
 
   async function evaluate() {
@@ -38,6 +46,9 @@ export default function TeamBuilder() {
         teamIds: team,
         teamMembers: members,
         evaluation: result,
+        // prefer project name from workflow context (Search page); fall back to `query` string
+        projectName: searchParams?.projectName || (typeof query === 'string' ? query : ''),
+        
         createdAt: new Date().toISOString(),
       })
     } catch (error) {
@@ -248,8 +259,18 @@ export default function TeamBuilder() {
               </button>
             </div>
 
+
             <div className="space-y-2 max-h-96 overflow-y-auto pr-2">
-              {pool.length === 0 && (
+              {loading && (
+                <div className="flex flex-col items-center justify-center py-16 text-gray-500 text-base">
+                  <svg className="animate-spin h-8 w-8 text-[#0E706F]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+                  </svg>
+                  <p className="mt-3 font-medium">Loading candidates...</p>
+                </div>
+              )}
+              {!loading && pool.length === 0 && (
                 <div className="text-center py-16 text-gray-500 text-base">
                   <div className="w-16 h-16 bg-[#E6F2F2] rounded-full flex items-center justify-center mx-auto mb-3">
                     <svg className="w-8 h-8 text-[#0E706F]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -259,7 +280,7 @@ export default function TeamBuilder() {
                   <p className="font-medium">Search for candidates to add to your team</p>
                 </div>
               )}
-              {pool.map((candidate) => (
+              {!loading && pool.map((candidate) => (
                 <div key={candidate.id} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg border border-gray-200 hover:border-gray-300 hover:bg-gray-100 transition-all">
                   <div className="flex items-center gap-3">
                     <img
