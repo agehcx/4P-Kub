@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import SearchInput from "../components/SearchInput";
 import ResultCard from "../components/ResultCard";
 import { mockSearch } from "../services/mockApi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useWorkflow } from "../contexts/WorkflowContext";
 
 export default function Search() {
   const [query, setQuery] = useState("");
@@ -12,6 +13,8 @@ export default function Search() {
   const [requiredSkills, setRequiredSkills] = useState(
     "Strategy, Data Analysis, ESG"
   );
+  const navigate = useNavigate();
+  const { setShortlistGenerated } = useWorkflow();
 
   async function doSearch(nextQuery) {
     setLoading(true);
@@ -26,6 +29,22 @@ export default function Search() {
     } finally {
       setLoading(false);
     }
+  }
+
+  function generateTop30Shortlist() {
+    // Save the search parameters for workflow tracking
+    const searchParams = {
+      projectName: query,
+      requiredSkills,
+      teamSize,
+      timestamp: Date.now()
+    };
+    
+    // Mark that shortlist has been generated
+    setShortlistGenerated(null, searchParams);
+    
+    // Navigate directly to the high-readiness candidates page
+    navigate('/high-readiness');
   }
 
   return (
@@ -121,7 +140,7 @@ export default function Search() {
           </div>
         </div>
         <button
-          onClick={() => doSearch(query)}
+          onClick={generateTop30Shortlist}
           className="w-full px-6 py-4 bg-[#0E706F] text-white rounded-lg font-semibold hover:bg-[#084343] transition-colors shadow-md text-lg flex items-center justify-center gap-2"
         >
           <svg

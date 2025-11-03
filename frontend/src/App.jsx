@@ -1,8 +1,10 @@
 import React from 'react'
 import { Routes, Route, Link } from 'react-router-dom'
+import { WorkflowProvider } from './contexts/WorkflowContext'
 import Landing from './pages/Landing'
 import Search from './pages/Search'
 import Candidate from './pages/Candidate'
+import HighReadinessCandidates from './pages/HighReadinessCandidates'
 import TeamBuilder from './pages/TeamBuilder'
 import TeamSummary from './pages/TeamSummary'
 import Analytics from './pages/Analytics'
@@ -10,9 +12,9 @@ import Admin from './pages/Admin'
 
 export default function App() {
   return (
-    // <div className="min-h-screen bg-gray-50 text-gray-900">
-    <div className="min-h-screen text-gray-900 bg-gradient-animate">
-      <header className="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
+    <WorkflowProvider>
+      <div className="min-h-screen text-gray-900 bg-gradient-animate">
+        <header className="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
         <div className="container mx-auto px-6 py-4 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
             <div className="w-10 h-10 bg-gradient-to-br from-[#0E706F] to-[#084343] rounded-lg flex items-center justify-center shadow-sm">
@@ -50,6 +52,7 @@ export default function App() {
           <Route path="/" element={<Landing />} />
           <Route path="/search" element={<Search />} />
           <Route path="/candidates/:id" element={<Candidate />} />
+          <Route path="/high-readiness" element={<HighReadinessCandidates />} />
           <Route path="/team" element={<TeamBuilder />} />
           <Route path="/team/summary" element={<TeamSummary />} />
           <Route path="/analytics" element={<Analytics />} />
@@ -57,5 +60,6 @@ export default function App() {
         </Routes>
       </main>
     </div>
+    </WorkflowProvider>
   )
 }

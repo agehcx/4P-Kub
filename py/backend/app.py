@@ -27,12 +27,12 @@ from mvp.kg import (  # noqa: E402
 from mvp.pipeline import RecruitingMVP  # noqa: E402
 
 DATA_DIR = BASE_DIR / "mvp" / "data"
-RESUMES_CSV = DATA_DIR / "sample_resumes.csv"
+CP_CUP_CSV = DATA_DIR / "DUMMY for CP CUP.csv"
 TEAMS_CSV = DATA_DIR / "sample_teams.csv"
 ROLE_JSON = DATA_DIR / "role_requirements.json"
 
-if not all(path.exists() for path in (RESUMES_CSV, TEAMS_CSV, ROLE_JSON)):
-    missing = [str(p) for p in (RESUMES_CSV, TEAMS_CSV, ROLE_JSON) if not p.exists()]
+if not all(path.exists() for path in (CP_CUP_CSV, TEAMS_CSV, ROLE_JSON)):
+    missing = [str(p) for p in (CP_CUP_CSV, TEAMS_CSV, ROLE_JSON) if not p.exists()]
     raise RuntimeError(f"Missing data files for knowledge graph backend: {missing}")
 
 ROLE_CONFIG = json.loads(ROLE_JSON.read_text())
@@ -93,13 +93,13 @@ class TeamEvaluationResponse(BaseModel):
 
 @lru_cache(maxsize=1)
 def _load_mvp() -> RecruitingMVP:
-    return RecruitingMVP(str(RESUMES_CSV))
+    return RecruitingMVP(str(CP_CUP_CSV))
 
 
 @lru_cache(maxsize=1)
 def _load_graph():
     cfg = KGConfig(role_id=ROLE_NODE)
-    return build_kg(str(RESUMES_CSV), str(TEAMS_CSV), str(ROLE_JSON), cfg)
+    return build_kg(str(CP_CUP_CSV), str(TEAMS_CSV), str(ROLE_JSON), cfg)
 
 
 def _candidate_row_by_id(candidate_id: str):
@@ -219,6 +219,31 @@ def search(request: SearchRequest) -> dict:
 
     limited = candidates[: request.limit]
     return {"candidates": limited, "total": len(candidates)}
+
+
+@app.get("/candidates/high-readiness")
+def get_high_readiness_candidates() -> dict:
+    """Get the top 30% high-readiness candidates."""
+    # Get all candidates with comprehensive scoring
+    all_candidates = _score_candidates(DEFAULT_REQUIRED, DEFAULT_NICE, limit=1000)
+    
+    # Sort by final score and take top 30%
+    sorted_candidates = sorted(all_candidates, key=lambda x: x['score'], reverse=True)
+    top_30_percent_count = max(1, int(len(sorted_candidates) * 0.3))
+    top_candidates = sorted_candidates[:top_30_percent_count]
+    
+    # Calculate stats
+    if top_candidates:
+        average_score = sum(c['score'] for c in top_candidates) / len(top_candidates)
+    else:
+        average_score = 0.0
+    
+    return {
+        "candidates": top_candidates,
+        "total": len(top_candidates),
+        "threshold": 0.8,  # Threshold for top 30%
+        "averageScore": average_score
+    }
 
 
 @app.get("/candidates/{candidate_id}")

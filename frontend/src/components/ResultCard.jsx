@@ -33,14 +33,7 @@ export default function ResultCard({ candidate }) {
               </div>
             </div>
 
-            <div className="flex flex-col items-end gap-1">
-              <div
-                className={`px-4 py-2 ${scoreColor} text-white rounded-lg text-center min-w-[4rem] shadow-sm`}
-              >
-                <div className="text-2xl font-bold">{score}</div>
-                <div className="text-xs opacity-90">Match</div>
-              </div>
-            </div>
+            
           </div>
 
           <div className="flex flex-wrap gap-2 mb-3">

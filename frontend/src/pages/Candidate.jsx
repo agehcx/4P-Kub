@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { mockGetCandidate } from '../services/mockApi'
 import ExplainPanel from '../components/ExplainPanel'
 
 export default function Candidate() {
   const { id } = useParams()
+  const navigate = useNavigate()
   const [candidate, setCandidate] = useState(null)
 
   useEffect(() => {
@@ -29,11 +30,23 @@ export default function Candidate() {
 
   return (
     <div className="max-w-7xl mx-auto">
-      {/* Breadcrumb */}
-      <div className="mb-6 text-sm text-gray-600">
-        <span>Step 2: Shortlist</span>
-        <span className="mx-2">→</span>
-        <span className="font-semibold text-gray-900">Candidate Detail</span>
+      {/* Back Button & Breadcrumb */}
+      <div className="mb-6 flex items-center gap-4">
+        <button 
+          onClick={() => navigate('/high-readiness')}
+          className="flex items-center gap-2 px-4 py-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
+        >
+          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+          <span className="font-medium">Back to Top 30% Shortlist</span>
+        </button>
+        
+        <div className="text-sm text-gray-600">
+          <span>Step 2: Shortlist</span>
+          <span className="mx-2">→</span>
+          <span className="font-semibold text-gray-900">Candidate Detail</span>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -45,12 +58,7 @@ export default function Candidate() {
                 alt="avatar" 
                 className="w-40 h-40 rounded-lg mx-auto object-cover border-4 border-gray-100" 
               />
-              <div className={`absolute -bottom-3 left-1/2 transform -translate-x-1/2 px-4 py-2 ${scoreColor} rounded-lg shadow-lg`}>
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-white">{score}</div>
-                  <div className="text-xs text-white/90">Composite Score</div>
-                </div>
-              </div>
+              
             </div>
             
             <h3 className="text-2xl font-bold text-center mt-8 text-gray-900">{candidate.name}</h3>
