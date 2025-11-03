@@ -9,7 +9,7 @@ export default function Search() {
   const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(false);
   const [results, setResults] = useState([]);
-  const [teamSize, setTeamSize] = useState("20");
+  const [teamSize, setTeamSize] = useState("5");
   const [requiredSkills, setRequiredSkills] = useState(
     "Strategy, Data Analysis, ESG"
   );
@@ -88,7 +88,7 @@ export default function Search() {
               min={2}
               max={20}
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-              placeholder="5"
+              placeholder='5'
               value={teamSize}
               onChange={(e) => setTeamSize(e.target.value)}
             />
