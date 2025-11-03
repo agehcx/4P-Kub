@@ -40,12 +40,12 @@ const workflowSteps = [
   {
     title: 'Generate Shortlist',
     description: 'AI ranks the top 30% with reasoning you can review.',
-    icon: 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2m-6 9l2 2 4-4',
+    icon: 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4',
   },
   {
     title: 'Propose Teams',
     description: 'Compare three mixes with trade-offs spelled out.',
-    icon: 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0',
+    icon: 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z',
   },
   {
     title: 'Track & Analytics',
@@ -99,7 +99,7 @@ const projects = [
     statusTone: 'bg-amber-100 text-amber-700',
     description: 'Elevating ML leadership for new AI initiatives.',
     badges: ['Machine Learning', 'Python', 'NLP'],
-    icon: 'M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547',
+    icon: 'M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z',
     link: '/team',
     linkLabel: 'Open Team Builder',
     color: 'bg-purple-100 text-purple-600',
@@ -144,7 +144,7 @@ export default function Landing() {
             </Link>
             <Link
               to="/analytics"
-              className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg border border-gray-300 text-gray-800 font-semibold hover:border-[#0E706F] hover:text-[#0E706F] transition-colors"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-white rounded-lg border border-gray-300 text-gray-800 font-semibold hover:border-[#0E706F] hover:text-[#0E706F] transition-colors"
             >
               View Live Analytics
             </Link>
@@ -211,7 +211,7 @@ export default function Landing() {
       </section>
 
       <section className="grid gap-6 lg:grid-cols-2">
-        <div className="space-y-6 p-8 rounded-3xl bg-gradient-to-br from-white via-white to-[#ECF6F6] border border-gray-200 shadow-sm">
+        <div className="space-y-6 p-8 rounded-3xl bg-gradient-to-br from-white via-white to-[#FFFF] border border-gray-200 shadow-sm">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#0E706F]/10 text-[#0E706F] text-xs font-semibold">Operating Pillars</div>
           <h2 className="text-3xl font-bold text-gray-900">Governance that blends automation with human oversight</h2>
           <p className="text-gray-600">Guardrails ensure decisions stay equitable while learnings cycle back into the intelligence layer.</p>
@@ -261,11 +261,11 @@ export default function Landing() {
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
           <div>
             <h2 className="text-3xl font-bold text-gray-900">Active missions</h2>
-            <p className="text-sm text-gray-600">Real teams assembled with CP Konha—see the momentum live.</p>
+            <p className="text-sm text-gray-600">Real teams come together with CP Konha. See the momentum live.</p>
           </div>
           <Link
             to="/team"
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-300 text-sm font-semibold text-gray-800 hover:border-[#0E706F] hover:text-[#0E706F] transition-colors"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-lg border border-gray-300 text-sm font-semibold text-gray-800 hover:border-[#0E706F] hover:text-[#0E706F] transition-colors"
           >
             Review team canvas
           </Link>

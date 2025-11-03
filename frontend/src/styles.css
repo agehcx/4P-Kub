@@ -43,3 +43,20 @@ html, body, #root {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+@keyframes gradientMove {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.bg-gradient-animate {
+  background: linear-gradient(270deg, #cfe1e1, #ffffff);
+  background-size: 200% 200%;
+  animation: gradientMove 9s ease infinite;
+}

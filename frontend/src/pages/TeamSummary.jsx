@@ -110,7 +110,7 @@ export default function TeamSummary() {
         </div>
         <div className="flex gap-2">
           <button
-            className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg font-medium hover:bg-gray-300 transition-colors"
+            className="px-4 py-2 bg-gray-200 bg-white text-gray-700 rounded-lg font-medium hover:bg-gray-300 transition-colors"
             onClick={() => navigate('/team')}
           >
             Back to Builder

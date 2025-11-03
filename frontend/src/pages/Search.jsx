@@ -100,6 +100,15 @@ export default function Search() {
               placeholder="10"
             />
           </div>
+           <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">Timezone</label>
+            <select className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+              <option>Any</option>
+              <option>Asia/Bangkok</option>
+              <option>Europe/London</option>
+              <option>America/New_York</option>
+            </select>
+          </div>
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-2">
               Start Date
@@ -281,7 +290,7 @@ export default function Search() {
                 </div>
                 <Link
                   to="/team"
-                  className="px-4 py-2 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-[#0E706F] transition-all flex items-center gap-2"
+                  className="px-6 py-2 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition-colors flex items-center gap-2"
                 >
                   Proceed to Team Builder
                   <svg
