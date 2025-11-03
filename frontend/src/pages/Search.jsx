@@ -15,9 +15,17 @@ export default function Search() {
 
   async function doSearch(nextQuery) {
     setLoading(true);
-    const response = await mockSearch({ query: nextQuery });
-    setResults(response.candidates);
-    setLoading(false);
+    try {
+      const response = await mockSearch({
+        projectName: nextQuery,
+        query: nextQuery,
+        requiredSkills,
+        teamSize,
+      });
+      setResults(response?.candidates || []);
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -58,8 +66,10 @@ export default function Search() {
             </label>
             <input
               type="number"
+              min={2}
+              max={20}
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-              placeholder="20"
+              placeholder="5"
               value={teamSize}
               onChange={(e) => setTeamSize(e.target.value)}
             />
@@ -84,20 +94,11 @@ export default function Search() {
             </label>
             <input
               type="number"
+              min={0}
+              max={50}
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-              placeholder="30"
+              placeholder="10"
             />
-          </div>
-          <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">
-              Timezone
-            </label>
-            <select className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
-              <option>Any</option>
-              <option>Asia/Bangkok</option>
-              <option>Europe/London</option>
-              <option>America/New_York</option>
-            </select>
           </div>
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-2">
@@ -105,6 +106,7 @@ export default function Search() {
             </label>
             <input
               type="date"
+              min={new Date().toISOString().split("T")[0]}
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
             />
           </div>

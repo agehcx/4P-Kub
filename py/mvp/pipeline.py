@@ -6,6 +6,7 @@ import numpy as np
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
+from .data_utils import load_candidate_dataframe
 from .skills import extract_skills
 
 @dataclass
@@ -19,15 +20,16 @@ class Candidate:
 
 class RecruitingMVP:
     def __init__(self, resumes_csv: str):
-        self.df = pd.read_csv(resumes_csv)
-        # Fill NAs
-        self.df = self.df.fillna({"resume_text":"", "skills":""})
+        self.df = load_candidate_dataframe(resumes_csv)
+        self.df = self.df.fillna({"resume_text": "", "skills": ""})
+
         # Build documents (resume text + provided skills)
         corpus = (self.df["resume_text"].astype(str) + " " + self.df["skills"].astype(str)).tolist()
         self.vectorizer = TfidfVectorizer(min_df=1, max_df=0.9, ngram_range=(1,2))
         self.doc_matrix = self.vectorizer.fit_transform(corpus)
         # Extract canonical skills
-        self.df["canonical_skills"] = self.df["resume_text"].astype(str).map(extract_skills)
+        combined_text = self.df["resume_text"].astype(str) + " " + self.df["skills"].astype(str)
+        self.df["canonical_skills"] = combined_text.map(extract_skills)
         # Personality vector
         self.personality_cols = ["O","C","E","A","N"]
         for col in self.personality_cols:
@@ -71,10 +73,24 @@ class RecruitingMVP:
         out["exp_score"] = yrs
         out["final_score"] = score
         out = out.sort_values("final_score", ascending=False).reset_index(drop=True)
+        out["canonical_skills"] = out["canonical_skills"].apply(
+            lambda value: sorted(value) if isinstance(value, (set, list, tuple)) else []
+        )
+        out["resume_text"] = out["resume_text"].astype(str)
         return out[[
-    "id","name","final_score","sem_score",
-    "coverage_required","coverage_nice","years_experience",
-    "O","C","E","A","N",                # ✅ เพิ่ม 5 คอลัมน์บุคลิกภาพ
-    "canonical_skills","resume_text"
-]].head(top_k)
+            "id",
+            "name",
+            "final_score",
+            "sem_score",
+            "coverage_required",
+            "coverage_nice",
+            "years_experience",
+            "O",
+            "C",
+            "E",
+            "A",
+            "N",
+            "canonical_skills",
+            "resume_text",
+        ]].head(top_k)
 

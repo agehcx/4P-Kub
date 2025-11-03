@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { mockEvaluateTeam, mockSearch } from '../services/mockApi'
 
 export default function TeamBuilder() {
@@ -6,6 +7,8 @@ export default function TeamBuilder() {
   const [query, setQuery] = useState('')
   const [team, setTeam] = useState([])
   const [evaluation, setEvaluation] = useState(null)
+  const [latestSummary, setLatestSummary] = useState(null)
+  const navigate = useNavigate()
 
   async function search() {
     const response = await mockSearch({ query })
@@ -13,8 +16,40 @@ export default function TeamBuilder() {
   }
 
   async function evaluate() {
-    const result = await mockEvaluateTeam({ candidateIds: team })
-    setEvaluation(result)
+    // if (team.length === 0) {
+    //   return
+    // }
+
+    try {
+      const result = await mockEvaluateTeam({ candidateIds: team })
+      setEvaluation(result)
+
+      const members = team.map((id) => {
+        const candidate = pool.find((item) => item.id === id)
+        if (candidate) {
+          const { name, title, photo } = candidate
+          return { id, name, title, photo }
+        }
+        return { id, name: id }
+      })
+
+      setLatestSummary({
+        id: `${Date.now()}`,
+        teamIds: team,
+        teamMembers: members,
+        evaluation: result,
+        createdAt: new Date().toISOString(),
+      })
+    } catch (error) {
+      console.error('Failed to evaluate team', error)
+    }
+  }
+
+  function goToSummary() {
+    if (!latestSummary) {
+      return
+    }
+    navigate('/team/summary', { state: { summary: latestSummary } })
   }
 
   return (
@@ -164,7 +199,11 @@ export default function TeamBuilder() {
       {/* Interactive Builder */}
       <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm mb-8">
         <div className="flex items-center gap-3 mb-6">
-          <div className="w-10 h-10 bg-[#0E706F] text-white rounded-full flex items-center justify-center font-bold">4</div>
+          <div className="w-12 h-12 bg-gradient-to-br from-[#0E706F] to-[#1C5581] text-white rounded-xl flex items-center justify-center shadow-sm">
+            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 11V7a1 1 0 012 0v4h4a1 1 0 010 2h-4v4a1 1 0 01-2 0v-4H7a1 1 0 010-2h4z" />
+            </svg>
+          </div>
           <div>
             <h3 className="text-xl font-bold text-gray-900">Adjust & Fine-Tune</h3>
             <p className="text-sm text-gray-600">Customize weights and constraints for your needs</p>
@@ -213,117 +252,119 @@ export default function TeamBuilder() {
       </div>
 
       {/* Original Interactive Builder (For Manual Tweaking) */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-1 bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
-          <h4 className="text-lg font-semibold text-gray-900 mb-4">Candidate Pool</h4>
-          
-          <div className="flex gap-2 mb-4">
-            <input
-              className="flex-1 px-4 py-2.5 bg-white border border-gray-300 rounded-lg outline-none focus:border-[#1C5581] focus:ring-2 focus:ring-indigo-500/20 transition-all text-gray-900 placeholder:text-gray-400"
-              value={query}
-              onChange={(event) => setQuery(event.target.value)}
-              placeholder="Search candidates"
-              onKeyPress={(e) => e.key === 'Enter' && search()}
-            />
-            <button 
-              className="px-5 py-2.5 bg-[#1C5581] text-white rounded-lg font-semibold hover:bg-[#143A58] transition-colors shadow-sm"
-              onClick={search}
-            >
-              Search
-            </button>
-          </div>
-          
-          <div className="space-y-2 max-h-96 overflow-y-auto pr-2">
-            {pool.length === 0 && (
-              <div className="text-center py-12 text-gray-500 text-sm">
-                <div className="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                  <svg className="w-8 h-8 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                  </svg>
-                </div>
-                <p className="font-medium">Search for candidates to add to your team</p>
-              </div>
-            )}
-            {pool.map((candidate) => (
-              <div key={candidate.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200 hover:border-gray-300 hover:bg-gray-100 transition-all">
-                <div className="flex items-center gap-3">
-                  <img 
-                    src={candidate.photo || 'https://via.placeholder.com/40'} 
-                    alt="avatar" 
-                    className="w-10 h-10 rounded-lg object-cover border-2 border-gray-200" 
-                  />
-                  <div>
-                    <div className="font-semibold text-sm text-gray-900">{candidate.name}</div>
-                    <div className="text-xs text-gray-600">{candidate.title}</div>
+      <div className="space-y-6">
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+          <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm h-full">
+            <h4 className="text-lg font-semibold text-gray-900 mb-4">Candidate Pool</h4>
+            
+            <div className="flex gap-2 mb-4">
+              <input
+                className="flex-1 px-4 py-2.5 bg-white border border-gray-300 rounded-lg outline-none focus:border-[#1C5581] focus:ring-2 focus:ring-indigo-500/20 transition-all text-gray-900 placeholder:text-gray-400"
+                value={query}
+                onChange={(event) => setQuery(event.target.value)}
+                placeholder="Search candidates"
+                onKeyPress={(e) => e.key === 'Enter' && search()}
+              />
+              <button 
+                className="px-5 py-2.5 bg-[#1C5581] text-white rounded-lg font-semibold hover:bg-[#143A58] transition-colors shadow-sm"
+                onClick={search}
+              >
+                Search
+              </button>
+            </div>
+            
+            <div className="space-y-2 max-h-96 overflow-y-auto pr-2">
+              {pool.length === 0 && (
+                <div className="text-center py-12 text-gray-500 text-sm">
+                  <div className="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <svg className="w-8 h-8 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
                   </div>
+                  <p className="font-medium">Search for candidates to add to your team</p>
                 </div>
-                <button
-                  className="px-3 py-1.5 bg-[#E8F0F0] text-[#1C5581] text-sm font-medium rounded-lg hover:bg-[#B7E6E5] border border-[#0E706F]/20 transition-all"
-                  onClick={() => setTeam((current) => Array.from(new Set([...current, candidate.id])))}
-                >
-                  + Add
-                </button>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="lg:col-span-1 bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
-          <h4 className="text-lg font-semibold text-gray-900 mb-4">Team Canvas</h4>
-          
-          <div className="space-y-2 mb-6 max-h-96 overflow-y-auto pr-2">
-            {team.length === 0 && (
-              <div className="text-center py-12 text-gray-500 text-sm">
-                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                  <svg className="w-8 h-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                  </svg>
-                </div>
-                <p className="font-medium">No team members yet</p>
-                <p className="text-gray-400 text-xs mt-1">Add candidates from the pool</p>
-              </div>
-            )}
-            {team.map((memberId) => {
-              const member = pool.find(c => c.id === memberId)
-              return (
-                <div key={memberId} className="flex items-center justify-between p-3 bg-indigo-50 rounded-lg border border-indigo-200">
+              )}
+              {pool.map((candidate) => (
+                <div key={candidate.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200 hover:border-gray-300 hover:bg-gray-100 transition-all">
                   <div className="flex items-center gap-3">
-                    {member && (
-                      <>
-                        <img 
-                          src={member.photo || 'https://via.placeholder.com/40'} 
-                          alt="avatar" 
-                          className="w-10 h-10 rounded-lg object-cover border-2 border-indigo-300" 
-                        />
-                        <div>
-                          <div className="font-semibold text-sm text-gray-900">{member.name}</div>
-                          <div className="text-xs text-gray-600">{member.title}</div>
-                        </div>
-                      </>
-                    )}
-                    {!member && <div className="font-semibold text-sm text-gray-900">{memberId}</div>}
+                    <img 
+                      src={candidate.photo || 'https://via.placeholder.com/40'} 
+                      alt="avatar" 
+                      className="w-10 h-10 rounded-lg object-cover border-2 border-gray-200" 
+                    />
+                    <div>
+                      <div className="font-semibold text-sm text-gray-900">{candidate.name}</div>
+                      <div className="text-xs text-gray-600">{candidate.title}</div>
+                    </div>
                   </div>
-                  <button 
-                    className="px-3 py-1.5 bg-red-50 text-red-700 text-sm font-medium rounded-lg hover:bg-red-100 border border-red-200 transition-all"
-                    onClick={() => setTeam((current) => current.filter((id) => id !== memberId))}
+                  <button
+                    className="px-3 py-1.5 bg-[#E8F0F0] text-[#1C5581] text-sm font-medium rounded-lg hover:bg-[#B7E6E5] border border-[#0E706F]/20 transition-all"
+                    onClick={() => setTeam((current) => Array.from(new Set([...current, candidate.id])))}
                   >
-                    Remove
+                    + Add
                   </button>
                 </div>
-              )
-            })}
+              ))}
+            </div>
           </div>
 
-          <button 
-            className="w-full px-6 py-3 bg-green-600 text-white rounded-lg font-semibold shadow-sm hover:bg-green-700 transition-colors disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-green-600"
-            onClick={evaluate}
-            disabled={team.length === 0}
-          >
-            Evaluate Team
-          </button>
+          <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm h-full">
+            <h4 className="text-lg font-semibold text-gray-900 mb-4">Team Canvas</h4>
+            
+            <div className="space-y-2 mb-6 max-h-96 overflow-y-auto pr-2">
+              {team.length === 0 && (
+                <div className="text-center py-12 text-gray-500 text-sm">
+                  <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <svg className="w-8 h-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+                  </div>
+                  <p className="font-medium">No team members yet</p>
+                  <p className="text-gray-400 text-xs mt-1">Add candidates from the pool</p>
+                </div>
+              )}
+              {team.map((memberId) => {
+                const member = pool.find(c => c.id === memberId)
+                return (
+                  <div key={memberId} className="flex items-center justify-between p-3 bg-indigo-50 rounded-lg border border-indigo-200">
+                    <div className="flex items-center gap-3">
+                      {member && (
+                        <>
+                          <img 
+                            src={member.photo || 'https://via.placeholder.com/40'} 
+                            alt="avatar" 
+                            className="w-10 h-10 rounded-lg object-cover border-2 border-indigo-300" 
+                          />
+                          <div>
+                            <div className="font-semibold text-sm text-gray-900">{member.name}</div>
+                            <div className="text-xs text-gray-600">{member.title}</div>
+                          </div>
+                        </>
+                      )}
+                      {!member && <div className="font-semibold text-sm text-gray-900">{memberId}</div>}
+                    </div>
+                    <button 
+                      className="px-3 py-1.5 bg-red-50 text-red-700 text-sm font-medium rounded-lg hover:bg-red-100 border border-red-200 transition-all"
+                      onClick={() => setTeam((current) => current.filter((id) => id !== memberId))}
+                    >
+                      Remove
+                    </button>
+                  </div>
+                )
+              })}
+            </div>
+
+            <button 
+              className="w-full px-6 py-3 bg-green-600 text-white rounded-lg font-semibold shadow-sm hover:bg-green-700 transition-colors disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-green-600"
+              onClick={evaluate}
+              disabled={team.length === 0}
+            >
+              Evaluate Team
+            </button>
+          </div>
         </div>
 
-        <div className="lg:col-span-1 bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+        <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
           <h4 className="text-lg font-semibold text-gray-900 mb-4">Team Health</h4>
           
           {evaluation ? (
@@ -368,6 +409,16 @@ export default function TeamBuilder() {
             </div>
           )}
         </div>
+      </div>
+
+      <div className="mt-6">
+        <button
+          className="w-full px-6 py-3 bg-[#0E706F] text-white rounded-lg font-semibold shadow-sm hover:bg-[#084343] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+          onClick={goToSummary}
+          disabled={!latestSummary}
+        >
+          Go to Team Summary
+        </button>
       </div>
     </div>
   )

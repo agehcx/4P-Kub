@@ -5,15 +5,19 @@ export default function Analytics() {
     <div className="max-w-7xl mx-auto">
       <div className="mb-8">
         <div className="flex items-center gap-3 mb-4">
-          <div className="w-10 h-10 bg-[#0E706F] text-white rounded-full flex items-center justify-center font-bold">5</div>
+          <div className="w-12 h-12 bg-gradient-to-br from-[#0E706F] to-[#084343] text-white rounded-xl flex items-center justify-center shadow-md">
+            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 11V7a1 1 0 012 0v4h4a1 1 0 010 2h-4v4a1 1 0 01-2 0v-4H7a1 1 0 010-2h4z" />
+            </svg>
+          </div>
           <div>
-            <h2 className="text-3xl font-bold text-gray-900">Track & Learn</h2>
+            <h2 className="text-3xl font-bold text-gray-900">Track & Analytics</h2>
             <p className="text-gray-600">Monitor team performance and feed insights back into the system</p>
           </div>
         </div>
       </div>
 
-      {/* Post-Deployment Tracking */}
+  {/* Post-Deployment Tracking */}
       <div className="bg-gradient-to-br from-green-50 to-emerald-50 border-2 border-green-300 p-6 rounded-xl mb-8">
         <h3 className="text-lg font-bold text-gray-900 mb-3 flex items-center gap-2">
           <svg className="w-6 h-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">

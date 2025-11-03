@@ -13,6 +13,7 @@ from typing import Dict, List, Tuple, Iterable
 import json
 import pandas as pd
 import networkx as nx
+from .data_utils import load_candidate_dataframe
 
 # ------------------------------
 # Graph schema
@@ -41,7 +42,7 @@ def build_kg(resumes_csv: str, teams_csv: str, role_requirements_json: str, cfg:
     G = nx.Graph()
 
     # Load data
-    resumes = pd.read_csv(resumes_csv)
+    resumes = load_candidate_dataframe(resumes_csv)
     teams = pd.read_csv(teams_csv)
     role = json.load(open(role_requirements_json))
 

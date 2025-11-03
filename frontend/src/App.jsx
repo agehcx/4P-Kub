@@ -4,6 +4,7 @@ import Landing from './pages/Landing'
 import Search from './pages/Search'
 import Candidate from './pages/Candidate'
 import TeamBuilder from './pages/TeamBuilder'
+import TeamSummary from './pages/TeamSummary'
 import Analytics from './pages/Analytics'
 import Admin from './pages/Admin'
 
@@ -49,6 +50,7 @@ export default function App() {
           <Route path="/search" element={<Search />} />
           <Route path="/candidates/:id" element={<Candidate />} />
           <Route path="/team" element={<TeamBuilder />} />
+          <Route path="/team/summary" element={<TeamSummary />} />
           <Route path="/analytics" element={<Analytics />} />
           <Route path="/admin" element={<Admin />} />
         </Routes>
