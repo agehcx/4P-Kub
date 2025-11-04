@@ -256,18 +256,32 @@ export async function mockEvaluateTeam(body = {}) {
   } catch (error) {
     console.warn('Falling back to mock team evaluation:', error)
     await new Promise((resolve) => setTimeout(resolve, 250))
-    const teamScore = Math.min(0.95, 0.5 + (payload.candidateIds.length || 0) * 0.15)
-    const gaps = [{ skill: 'ML Ops', severity: 'high' }]
+
+    const teamSize = payload.candidateIds?.length || 0
+    const baseline = 0.55 + teamSize * 0.09
+    const jitter = (Math.random() * 0.06) - 0.03
+    const teamScore = Math.max(0.68, Math.min(0.88, baseline + jitter))
+
+    const gapLibrary = [
+      { skill: 'ML Ops Integration', severity: 'high' },
+      { skill: 'Security Review', severity: 'medium' },
+      { skill: 'Stakeholder Comms', severity: 'medium' },
+      { skill: 'UX Research', severity: 'low' },
+      { skill: 'Data Governance', severity: 'low' },
+    ]
+
+    const gaps = gapLibrary.slice(0, Math.min(3, gapLibrary.length))
+
     const alternatives = [
-      { name: 'Balanced', candidateIds: ['c1', 'c2'] },
-      { name: 'Growth', candidateIds: ['c1', 'c3'] },
-      { name: 'Efficiency', candidateIds: ['c2', 'c3'] },
+      { name: 'Balanced', candidateIds: payload.candidateIds?.slice(0, 2) || [] },
+      { name: 'Growth', candidateIds: payload.candidateIds?.slice(-2) || [] },
+      { name: 'Efficiency', candidateIds: payload.candidateIds?.filter((_, index) => index % 2 === 0) || [] },
     ]
 
     return {
       teamScore,
       gaps,
-      diversityMetrics: { genderDiversity: 0.5 },
+      diversityMetrics: { genderDiversity: 0.46 },
       alternatives,
     }
   }

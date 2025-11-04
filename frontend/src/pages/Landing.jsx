@@ -9,15 +9,15 @@ const stats = [
     accent: 'bg-indigo-100 text-indigo-700',
   },
   {
-    label: 'Hiring Velocity',
-    value: '2.3x faster',
-    caption: 'vs. manual staffing',
+    label: 'Staffing Turnaround',
+    value: '36 hrs',
+    caption: 'median intake-to-launch window',
     accent: 'bg-emerald-100 text-emerald-700',
   },
   {
     label: 'Stakeholder Confidence',
-    value: '94%',
-    caption: 'leaders trust our picks',
+    value: '4.7 / 5',
+    caption: 'post-handoff CSAT average',
     accent: 'bg-amber-100 text-amber-700',
   },
 ]

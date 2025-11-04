@@ -13,6 +13,13 @@ export default function Search() {
   const [requiredSkills, setRequiredSkills] = useState(
     "Strategy, Data Analysis, ESG"
   );
+  const skillSuggestions = [
+    'Project Management',
+    'Change Management',
+    'Stakeholder Engagement',
+    'Operational Risk',
+    'Data Visualisation',
+  ]
   const navigate = useNavigate();
   const { setShortlistGenerated } = useWorkflow();
 
@@ -45,6 +52,18 @@ export default function Search() {
     
     // Navigate directly to the high-readiness candidates page
     navigate('/high-readiness');
+  }
+
+  function handleAddSuggestedSkill(skill) {
+    const parsed = requiredSkills
+      .split(',')
+      .map((item) => item.trim())
+      .filter(Boolean)
+
+    if (!parsed.includes(skill)) {
+      const updated = [...parsed, skill]
+      setRequiredSkills(updated.join(', '))
+    }
   }
 
   return (
@@ -105,6 +124,18 @@ export default function Search() {
             value={requiredSkills}
             onChange={(e) => setRequiredSkills(e.target.value)}
           />
+          <div className="flex flex-wrap gap-2 mt-3">
+            {skillSuggestions.map((skill) => (
+              <button
+                key={skill}
+                type="button"
+                onClick={() => handleAddSuggestedSkill(skill)}
+                className="px-3 py-1.5 bg-[#E6F2F2] text-[#0E706F] text-xs font-semibold rounded-full border border-[#0E706F1A] hover:bg-[#C9E5E4] transition-colors"
+              >
+                + {skill}
+              </button>
+            ))}
+          </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
           <div>
@@ -115,19 +146,26 @@ export default function Search() {
               type="number"
               min={0}
               max={50}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+              className="w-full h-12 px-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0E706F]/20 focus:border-[#0E706F]"
               placeholder="10"
             />
           </div>
-           <div>
+          {/* <div>
             <label className="block text-sm font-semibold text-gray-700 mb-2">Timezone</label>
-            <select className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
-              <option>Any</option>
-              <option>Asia/Bangkok</option>
-              <option>Europe/London</option>
-              <option>America/New_York</option>
-            </select>
-          </div>
+            <div className="relative">
+              <select className="w-full h-12 px-4 pr-12 border border-gray-300 rounded-lg appearance-none bg-white focus:ring-2 focus:ring-[#0E706F]/20 focus:border-[#0E706F]">
+                <option>Any</option>
+                <option>Asia/Bangkok</option>
+                <option>Europe/London</option>
+                <option>America/New_York</option>
+              </select>
+              <span className="pointer-events-none absolute inset-y-0 right-4 flex items-center text-gray-400">
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </span>
+            </div>
+          </div> */}
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-2">
               Start Date
@@ -135,7 +173,7 @@ export default function Search() {
             <input
               type="date"
               min={new Date().toISOString().split("T")[0]}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+              className="w-full h-12 px-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0E706F]/20 focus:border-[#0E706F]"
             />
           </div>
         </div>
