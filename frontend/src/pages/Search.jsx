@@ -137,46 +137,7 @@ export default function Search() {
             ))}
           </div>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-          <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">
-              Min Diversity %
-            </label>
-            <input
-              type="number"
-              min={0}
-              max={50}
-              className="w-full h-12 px-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0E706F]/20 focus:border-[#0E706F]"
-              placeholder="10"
-            />
-          </div>
-          {/* <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">Timezone</label>
-            <div className="relative">
-              <select className="w-full h-12 px-4 pr-12 border border-gray-300 rounded-lg appearance-none bg-white focus:ring-2 focus:ring-[#0E706F]/20 focus:border-[#0E706F]">
-                <option>Any</option>
-                <option>Asia/Bangkok</option>
-                <option>Europe/London</option>
-                <option>America/New_York</option>
-              </select>
-              <span className="pointer-events-none absolute inset-y-0 right-4 flex items-center text-gray-400">
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-              </span>
-            </div>
-          </div> */}
-          <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">
-              Start Date
-            </label>
-            <input
-              type="date"
-              min={new Date().toISOString().split("T")[0]}
-              className="w-full h-12 px-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0E706F]/20 focus:border-[#0E706F]"
-            />
-          </div>
-        </div>
+        
         <button
           onClick={generateTop30Shortlist}
           className="w-full px-6 py-4 bg-[#0E706F] text-white rounded-lg font-semibold hover:bg-[#084343] transition-colors shadow-md text-lg flex items-center justify-center gap-2"
